@@ -26,8 +26,17 @@ public class PerlinNoiseGenerator : MonoBehaviour{
     }
 
     void InstantiateCube(Vector3 position){
-        GameObject cube = Instantiate(Resources.Load("CubePrefab") as GameObject);
-        cube.transform.position = position;
-        cube.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
+        GameObject cubePrefab = Resources.Load<GameObject>("CubePrefab");
+
+        // Check if the prefab is found
+        if (cubePrefab != null){
+            // Instantiate the cube prefab at the calculated position
+            GameObject cube = Instantiate(cubePrefab);
+            cube.transform.position = position;
+            cube.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
+        }
+        else{
+            Debug.LogError("CubePrefab not found in Resources folder.");
+        }
     }
 }
