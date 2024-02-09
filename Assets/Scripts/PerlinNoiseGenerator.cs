@@ -19,7 +19,10 @@ public class PerlinNoiseGenerator : MonoBehaviour{
 
                 float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize;
 
-                Vector3 cubePosition = new Vector3(x * cubeSize, 0f, z * cubeSize);
+                float xOffset = (resolution - 1) * cubeSize / 2f;
+                float zOffset = (resolution - 1) * cubeSize / 2f;
+
+                Vector3 cubePosition = new Vector3((x - xOffset) * cubeSize, y, (z - zOffset) * cubeSize);
 
                 InstantiateCube(cubePosition, transform);
             }
