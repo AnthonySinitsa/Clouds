@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PerlinNoiseGenerator : MonoBehaviour{
 
@@ -18,21 +19,20 @@ public class PerlinNoiseGenerator : MonoBehaviour{
 
                 float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize;
 
-                Vector3 cubePosition = new Vector3(x * cubeSize, y, z * cubeSize);
+                Vector3 cubePosition = new Vector3(x * cubeSize, 0f, z * cubeSize);
 
-                InstantiateCube(cubePosition);
+                InstantiateCube(cubePosition, transform);
             }
         }
     }
 
-    void InstantiateCube(Vector3 position){
+    void InstantiateCube(Vector3 position, Transform parent){
         GameObject cubePrefab = Resources.Load<GameObject>("CubePrefab");
 
         // Check if the prefab is found
         if (cubePrefab != null){
             // Instantiate the cube prefab at the calculated position
-            GameObject cube = Instantiate(cubePrefab);
-            cube.transform.position = position;
+            GameObject cube = Instantiate(cubePrefab, position, Quaternion.identity, parent);
             cube.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
         }
         else{
