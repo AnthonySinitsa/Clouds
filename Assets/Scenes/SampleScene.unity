@@ -328,7 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolution: 25
   scale: 0.1
-  cubeSize: 0.1
+  cubeSize: 1
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0
