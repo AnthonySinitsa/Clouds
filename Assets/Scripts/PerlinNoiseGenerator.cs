@@ -4,8 +4,8 @@ using System.Collections;
 public class PerlinNoiseGenerator : MonoBehaviour{
 
     public int resolution = 10;
-    public float scale = 1f;
-    public float cubeSize = 1f;
+    public float scale = 0.1f;
+    public float cubeSize = 0.1f;
 
     void Start(){
        GenerateTerrain(); 
@@ -17,7 +17,7 @@ public class PerlinNoiseGenerator : MonoBehaviour{
                 float xCoord = transform.position.x + x * scale;
                 float zCoord = transform.position.z + z * scale;
 
-                float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize;
+                float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize * 10f;
 
                 float xOffset = (resolution - 1) * cubeSize / 2f;
                 float zOffset = (resolution - 1) * cubeSize / 2f;

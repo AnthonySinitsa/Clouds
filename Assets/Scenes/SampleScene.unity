@@ -314,7 +314,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
   m_PrefabInstance: {fileID: 4219575181254361796}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1197102229
+--- !u!114 &1197102233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,9 +326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8e9673a1e9a8741ae21791defe24f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 10
-  scale: 1
-  cubeSize: 1
+  resolution: 25
+  scale: 0.1
+  cubeSize: 0.1
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -391,7 +391,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1197102229}
+      addedObject: {fileID: 1197102233}
   m_SourcePrefab: {fileID: 100100000, guid: 92ba4a696835354469d930881a1e5010, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
