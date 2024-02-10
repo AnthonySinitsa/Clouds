@@ -12,6 +12,9 @@ public class PerlinNoiseGenerator : MonoBehaviour{
     }
 
     void GenerateTerrain(){
+
+        float halfResolution = (resolution - 1) * cubeSize / 2f;
+
         for(int x = 0; x < resolution; x++){
             for(int z = 0; z < resolution; z++){
                 float xCoord = transform.position.x + x * scale;
@@ -19,10 +22,7 @@ public class PerlinNoiseGenerator : MonoBehaviour{
 
                 float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize * 10f;
 
-                float xOffset = (resolution - 1) * cubeSize / 2f;
-                float zOffset = (resolution - 1) * cubeSize / 2f;
-
-                Vector3 cubePosition = new Vector3((x - xOffset) * cubeSize, y, (z - zOffset) * cubeSize);
+                Vector3 cubePosition = new Vector3((x - halfResolution) * cubeSize, y, (z - halfResolution) * cubeSize);
 
                 InstantiateCube(cubePosition, transform);
             }
