@@ -341,9 +341,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf7abeaf5c6aa43b0ed559ca0123d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 10
+  resolution: 50
   scale: 0.1
-  cubeSize: 0.1
+  cubeSizeMultiplier: 1
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0
