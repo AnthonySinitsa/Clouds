@@ -356,9 +356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf0a9fbaddaa0e9459d97a76e33e2849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
   resolution: 50
   perlinScale: 0.1
-  cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0

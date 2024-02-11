@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CubePlatformGenerator : MonoBehaviour
 {
-    public int resolution = 25; // Set the resolution here
-    public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
+    [Range(1, 50)] public int resolution = 25; // Set the resolution here
+    public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
 
     void Start()
     {
@@ -36,7 +36,7 @@ public class CubePlatformGenerator : MonoBehaviour
 
                 // Instantiate a cube prefab with adjusted position and scale
                 GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
-                cube.transform.localScale = new Vector3(cubeSize, 1.0f, cubeSize);
+                cube.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize); // Set the Y scale to cubeSize
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
