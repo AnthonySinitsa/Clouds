@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class CubePlatformGenerator : MonoBehaviour
 {
-    public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
     public int resolution = 25; // Set the resolution here
+    public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
+    public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
 
     void Start()
     {
@@ -27,8 +28,11 @@ public class CubePlatformGenerator : MonoBehaviour
                 float xPos = startX + x * cubeSize;
                 float zPos = startZ + z * cubeSize;
 
-                // Instantiate a cube prefab at the calculated position
-                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
+                // Use Perlin noise to determine the height variation
+                float yOffset = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+
+                // Instantiate a cube prefab with adjusted Y position
+                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
