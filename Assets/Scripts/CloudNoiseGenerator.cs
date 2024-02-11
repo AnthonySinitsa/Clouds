@@ -14,8 +14,8 @@ public class CloudNoiseGenerator : MonoBehaviour{
     void GenerateCloud(){
         for(int x = 0; x < resolution; x++){
             for(int z = 0; z < resolution; z++){
-                float xCoord = transform.position.x + x * scale;
-                float zCoord = transform.position.z + z * scale;
+                float xCoord = (x - resolution / 2.0f) * scale + transform.position.x;
+                float zCoord = (z - resolution / 2.0f) * scale + transform.position.z;
 
                 float perlinValue = Mathf.PerlinNoise(xCoord, zCoord);
 
@@ -23,7 +23,10 @@ public class CloudNoiseGenerator : MonoBehaviour{
 
                 cubeSize = Mathf.Max(cubeSize, 0.1f);
 
-                Vector3 cubePosition = new Vector3(x * cubeSize, 0f, z * cubeSize);
+                float xPos = (x - resolution / 2.0f) * cubeSize;
+                float zPos = (z - resolution / 2.0f) * cubeSize;
+
+                Vector3 cubePosition = new Vector3(xPos, 0f, zPos);
 
                 InstantiateCube(cubePosition, transform, cubeSize);
             }
