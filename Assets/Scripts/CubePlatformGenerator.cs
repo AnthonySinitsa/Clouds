@@ -13,12 +13,15 @@ public class CubePlatformGenerator : MonoBehaviour
 
     void GeneratePlatform()
     {
-        float cubeSize = 1.0f; // Size of each cube
-        float platformSize = resolution * cubeSize; // Total size of the platform
+        float targetPlatformSize = 20.0f; // Desired platform size
+        float normalizedResolution = Mathf.Clamp01(resolution / targetPlatformSize); // Normalize resolution to [0, 1]
+
+        // Calculate the cube size based on the normalized resolution
+        float cubeSize = targetPlatformSize / resolution;
 
         // Calculate the starting point for the platform
-        float startX = -platformSize / 2;
-        float startZ = -platformSize / 2;
+        float startX = -targetPlatformSize / 2;
+        float startZ = -targetPlatformSize / 2;
 
         for (int x = 0; x < resolution; x++)
         {
@@ -31,8 +34,9 @@ public class CubePlatformGenerator : MonoBehaviour
                 // Use Perlin noise to determine the height variation
                 float yOffset = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
 
-                // Instantiate a cube prefab with adjusted Y position
+                // Instantiate a cube prefab with adjusted position and scale
                 GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
+                cube.transform.localScale = new Vector3(cubeSize, 1.0f, cubeSize);
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
