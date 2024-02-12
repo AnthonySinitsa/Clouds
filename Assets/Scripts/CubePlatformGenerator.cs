@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class CubePlatformGenerator : MonoBehaviour
-{
+public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
     public int resolution = 25; // Set the resolution here
     public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
-
-    void Start()
-    {
+    // public float smallCubeMultiplier = 1.9f; // Multiplier for smaller cubes
+    // public float largeCubeMultiplier = 2.0f; // Multiplier for larger cubes
+    void Start(){
         GeneratePlatform();
     }
 
-    void GeneratePlatform()
-    {
+    void GeneratePlatform(){
         float targetPlatformSize = 20.0f; // Desired platform size
         float normalizedResolution = Mathf.Clamp01(resolution / targetPlatformSize); // Normalize resolution to [0, 1]
 
@@ -23,10 +21,8 @@ public class CubePlatformGenerator : MonoBehaviour
         float startX = -targetPlatformSize / 2;
         float startZ = -targetPlatformSize / 2;
 
-        for (int x = 0; x < resolution; x++)
-        {
-            for (int z = 0; z < resolution; z++)
-            {
+        for (int x = 0; x < resolution; x++){
+            for (int z = 0; z < resolution; z++){
                 // Calculate the position for each cube
                 float xPos = startX + x * cubeSize;
                 float zPos = startZ + z * cubeSize;
@@ -37,6 +33,9 @@ public class CubePlatformGenerator : MonoBehaviour
                 // Calculate the final scale for the cube
                 float cubeScale = cubeSize + scaleVariation;
 
+                // apply cube size multiplier based on scale
+                // cubeScale *= GetCubeSizeMultiplier(cubeScale);
+
                 // Instantiate a cube prefab with adjusted position and scale
                 GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
                 cube.transform.localScale = new Vector3(cubeScale, cubeScale, cubeScale);
@@ -46,6 +45,16 @@ public class CubePlatformGenerator : MonoBehaviour
             }
         }
     }
+
+    // float GetCubeSizeMultiplier(float cubeScale){
+    //     if(cubeScale < 1.0f){
+    //         return smallCubeMultiplier;
+    //     } else if(cubeScale > 1.0f){
+    //         return largeCubeMultiplier;
+    //     } else{
+    //         return 1.0f;
+    //     }
+    // }
 
     // void Update(){
     //     GeneratePlatform();
