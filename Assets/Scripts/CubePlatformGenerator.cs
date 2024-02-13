@@ -24,18 +24,23 @@ public class CubePlatformGenerator : MonoBehaviour{
                 float zPos = startZ + z * cubeSize + 0.5f;
 
                 // Use Perlin noise to determine the height variation
-                float yOffset = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                float scaleMultiplier = 
+                    Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
 
-                // Instantiate a cube prefab with adjusted Y position
-                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
+                // Instantiate a cube prefab with adjusted scale
+                GameObject cube = 
+                    Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
+
+                // this var for better readibility for the transformation local var
+                float perlinCubeSize = cubeSize * scaleMultiplier;
+
+                // adjust scale of cube based on perlin value
+                cube.transform.localScale = 
+                    new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
             }
         }
     }
-
-    // void Update(){
-    //     GeneratePlatform();
-    // }
 }
