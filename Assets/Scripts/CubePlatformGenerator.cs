@@ -33,7 +33,7 @@ public class CubePlatformGenerator : MonoBehaviour{
                 scaleVariation = Mathf.Clamp(scaleVariation, -0.7f, 1.5f);
 
                 // Calculate the final scale for the cube
-                float cubeScale = Mathf.Clamp(cubeSize + scaleVariation, 0.01f, 2.0f);
+                float cubeScale = Mathf.Clamp(cubeSize + scaleVariation, 0.01f, 5.0f);
 
                 // Instantiate a cube prefab with adjusted position and scale
                 GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
