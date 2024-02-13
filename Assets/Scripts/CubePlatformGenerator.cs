@@ -10,15 +10,12 @@ public class CubePlatformGenerator : MonoBehaviour{
     }
 
     void GeneratePlatform(){
-        float targetPlatformSize = 20.0f; // Desired platform size
-        float normalizedResolution = Mathf.Clamp01(resolution / targetPlatformSize); // Normalize resolution to [0, 1]
-
-        // Calculate the cube size based on the normalized resolution
-        float cubeSize = targetPlatformSize / resolution;
+        float cubeSize = 1.0f; // Size of each cube
+        float platformSize = resolution * cubeSize; // Total size of the platform
 
         // Calculate the starting point for the platform
-        float startX = -targetPlatformSize / 2;
-        float startZ = -targetPlatformSize / 2;
+        float startX = -platformSize / 2;
+        float startZ = -platformSize / 2;
 
         for (int x = 0; x < resolution; x++){
             for (int z = 0; z < resolution; z++){
@@ -26,18 +23,11 @@ public class CubePlatformGenerator : MonoBehaviour{
                 float xPos = startX + x * cubeSize;
                 float zPos = startZ + z * cubeSize;
 
-                // Use Perlin noise to determine the size variation
-                float scaleVariation = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                // Use Perlin noise to determine the height variation
+                float yOffset = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
 
-                // clamp the scale variation to desired range
-                scaleVariation = Mathf.Clamp(scaleVariation, -0.7f, 1.5f);
-
-                // Calculate the final scale for the cube
-                float cubeScale = Mathf.Clamp(cubeSize + scaleVariation, 0.01f, 5.0f);
-
-                // Instantiate a cube prefab with adjusted position and scale
-                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
-                cube.transform.localScale = new Vector3(cubeScale, cubeScale, cubeScale);
+                // Instantiate a cube prefab with adjusted Y position
+                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
