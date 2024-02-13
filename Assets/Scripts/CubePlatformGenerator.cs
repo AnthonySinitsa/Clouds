@@ -4,59 +4,43 @@ public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
     public int resolution = 25; // Set the resolution here
     public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
-    // public float smallCubeMultiplier = 1.9f; // Multiplier for smaller cubes
-    // public float largeCubeMultiplier = 2.0f; // Multiplier for larger cubes
+
     void Start(){
         GeneratePlatform();
     }
 
     void GeneratePlatform(){
-        float targetPlatformSize = 20.0f; // Desired platform size
-        float normalizedResolution = Mathf.Clamp01(resolution / targetPlatformSize); // Normalize resolution to [0, 1]
-
-        // Calculate the cube size based on the normalized resolution
-        float cubeSize = targetPlatformSize / resolution;
+        float cubeSize = 1.0f; // Size of each cube
+        float platformSize = resolution * cubeSize; // Total size of the platform
 
         // Calculate the starting point for the platform
-        float startX = -targetPlatformSize / 2;
-        float startZ = -targetPlatformSize / 2;
+        float startX = -platformSize / 2;
+        float startZ = -platformSize / 2;
 
         for (int x = 0; x < resolution; x++){
             for (int z = 0; z < resolution; z++){
                 // Calculate the position for each cube
-                float xPos = startX + x * cubeSize;
-                float zPos = startZ + z * cubeSize;
+                float xPos = startX + x * cubeSize + 0.5f;
+                float zPos = startZ + z * cubeSize + 0.5f;
 
-                // Use Perlin noise to determine the size variation
-                float scaleVariation = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                // Use Perlin noise to determine the height variation
+                float scaleMultiplier = 
+                    Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
 
-                // Calculate the final scale for the cube
-                float cubeScale = cubeSize + scaleVariation;
+                // Instantiate a cube prefab with adjusted scale
+                GameObject cube = 
+                    Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
 
-                // apply cube size multiplier based on scale
-                // cubeScale *= GetCubeSizeMultiplier(cubeScale);
+                // this var for better readibility for the transformation local var
+                float perlinCubeSize = cubeSize * scaleMultiplier;
 
-                // Instantiate a cube prefab with adjusted position and scale
-                GameObject cube = Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
-                cube.transform.localScale = new Vector3(cubeScale, cubeScale, cubeScale);
+                // adjust scale of cube based on perlin value
+                cube.transform.localScale = 
+                    new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
 
                 // Make the cube a child of the prefab cube
                 cube.transform.parent = transform;
             }
         }
     }
-
-    // float GetCubeSizeMultiplier(float cubeScale){
-    //     if(cubeScale < 1.0f){
-    //         return smallCubeMultiplier;
-    //     } else if(cubeScale > 1.0f){
-    //         return largeCubeMultiplier;
-    //     } else{
-    //         return 1.0f;
-    //     }
-    // }
-
-    // void Update(){
-    //     GeneratePlatform();
-    // }
 }
