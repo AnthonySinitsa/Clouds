@@ -20,8 +20,8 @@ public class CubePlatformGenerator : MonoBehaviour{
         for (int x = 0; x < resolution; x++){
             for (int z = 0; z < resolution; z++){
                 // Calculate the position for each cube
-                float xPos = startX + x * cubeSize;
-                float zPos = startZ + z * cubeSize;
+                float xPos = startX + x * cubeSize + 0.5f;
+                float zPos = startZ + z * cubeSize + 0.5f;
 
                 // Use Perlin noise to determine the height variation
                 float yOffset = Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
