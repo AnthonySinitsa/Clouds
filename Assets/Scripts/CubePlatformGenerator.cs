@@ -4,6 +4,7 @@ public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
     public int resolution = 25; // Set the resolution here
     public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
+    public float minCubeSize = 0.5f; // min size for cubes to spawn
 
     void Start(){
         GeneratePlatform();
@@ -26,20 +27,24 @@ public class CubePlatformGenerator : MonoBehaviour{
                 // Use Perlin noise to determine the height variation
                 float scaleMultiplier = 
                     Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                float yOffset = 
+                    Mathf.PerlinNoise(x * perlinScale + Time.time, z * perlinScale + Time.time) * 2.0f;
 
-                // Instantiate a cube prefab with adjusted scale
-                GameObject cube = 
-                    Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
+                if(cubeSize * scaleMultiplier > minCubeSize){
+                    // Instantiate a cube prefab with adjusted scale
+                    GameObject cube = 
+                        Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
 
-                // this var for better readibility for the transformation local var
-                float perlinCubeSize = cubeSize * scaleMultiplier;
+                    // this var for better readibility for the transformation local var
+                    float perlinCubeSize = cubeSize * scaleMultiplier;
 
-                // adjust scale of cube based on perlin value
-                cube.transform.localScale = 
-                    new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
+                    // adjust scale of cube based on perlin value
+                    cube.transform.localScale = 
+                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
 
-                // Make the cube a child of the prefab cube
-                cube.transform.parent = transform;
+                    // Make the cube a child of the prefab cube
+                    cube.transform.parent = transform;
+                }
             }
         }
     }

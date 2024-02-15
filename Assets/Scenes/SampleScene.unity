@@ -359,6 +359,7 @@ MonoBehaviour:
   cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
   resolution: 64
   perlinScale: 0.1
+  minCubeSize: 1.2
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0
