@@ -6,11 +6,17 @@ public class CubePlatformGenerator : MonoBehaviour{
     public float perlinScale; // Adjust the scale of the Perlin noise
     public float minCubeSize; // min size for cubes to spawn
     public float waveSpeed;
-    public float waveHeight;
     public float offset;
 
-    void Start(){
+    void Update(){
+        ClearPlatform();
         GeneratePlatform();
+    }
+
+    void ClearPlatform(){
+        foreach(Transform child in transform){
+            Destroy(child.gameObject);
+        }
     }
 
     void GeneratePlatform(){
@@ -27,9 +33,10 @@ public class CubePlatformGenerator : MonoBehaviour{
                 float xPos = startX + x * cubeSize + 0.5f;
                 float zPos = startZ + z * cubeSize + 0.5f;
 
-                // Use Perlin noise to determine the height variation
+                // use perlin noise with time-dependent offset and speed to determine the height variation
+                float timeDependentOffset = Time.time * waveSpeed + offset;
                 float scaleMultiplier = 
-                    Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                    Mathf.PerlinNoise(x * perlinScale + timeDependentOffset, z * perlinScale + timeDependentOffset) * 2.0f;
 
                 if(cubeSize * scaleMultiplier > minCubeSize){
                     // Instantiate a cube prefab with adjusted scale
