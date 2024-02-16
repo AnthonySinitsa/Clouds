@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
-    public int resolution = 25; // Set the resolution here
-    public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
-    public float minCubeSize = 0.5f; // min size for cubes to spawn
+    public int resolution; // Set the resolution here
+    public float perlinScale; // Adjust the scale of the Perlin noise
+    public float minCubeSize; // min size for cubes to spawn
 
     void Start(){
         GeneratePlatform();
