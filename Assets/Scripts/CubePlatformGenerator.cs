@@ -27,18 +27,14 @@ public class CubePlatformGenerator : MonoBehaviour{
                 // Use Perlin noise to determine the height variation
                 float scaleMultiplier = 
                     Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
-                float yOffset = 
-                    Mathf.PerlinNoise(x * perlinScale + Time.time, z * perlinScale + Time.time) * 2.0f;
 
                 if(cubeSize * scaleMultiplier > minCubeSize){
                     // Instantiate a cube prefab with adjusted scale
                     GameObject cube = 
-                        Instantiate(cubePrefab, new Vector3(xPos, yOffset, zPos), Quaternion.identity);
+                        Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
 
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
-
-                    // adjust scale of cube based on perlin value
                     cube.transform.localScale = 
                         new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
 
@@ -48,4 +44,16 @@ public class CubePlatformGenerator : MonoBehaviour{
             }
         }
     }
+
+    // void Update(){
+    //     MovePerlinNoise();
+    // }
+
+    // void MovePerlinNoise(){
+    //     float movementSpeed = 0.1f;
+    //     perlinScale += Time.deltaTime * movementSpeed;
+
+    //     float diagonalMovement = Mathf.Sin(Time.time * movementSpeed);
+    //     transform.position = new Vector3(diagonalMovement, 0, diagonalMovement);
+    // }
 }
