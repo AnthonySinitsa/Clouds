@@ -32,6 +32,7 @@ public class CubePlatformGenerator : MonoBehaviour{
                 // Calculate the position for each cube
                 float xPos = startX + x * cubeSize + 0.5f;
                 float zPos = startZ + z * cubeSize + 0.5f;
+                float yPos = Mathf.PerlinNoise(xPos, zPos) * 2.0f;
 
                 // use perlin noise with time-dependent offset and speed to determine the height variation
                 float timeDependentOffset = Time.time * waveSpeed + offset;
@@ -41,7 +42,7 @@ public class CubePlatformGenerator : MonoBehaviour{
                 if(cubeSize * scaleMultiplier > minCubeSize){
                     // Instantiate a cube prefab with adjusted scale
                     GameObject cube = 
-                        Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
+                        Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
 
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
