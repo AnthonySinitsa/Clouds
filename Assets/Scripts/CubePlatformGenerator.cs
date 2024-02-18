@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
-    public int resolution = 25; // Set the resolution here
-    public float perlinScale = 0.1f; // Adjust the scale of the Perlin noise
-    public float minCubeSize = 0.5f; // min size for cubes to spawn
+    public int resolution; // Set the resolution here
+    public float perlinScale; // Adjust the scale of the Perlin noise
+    public float minCubeSize; // min size for cubes to spawn
+    public float waveSpeed;
+    public float offset;
 
-    void Start(){
+    void Update(){
+        ClearPlatform();
         GeneratePlatform();
+    }
+
+    void ClearPlatform(){
+        foreach(Transform child in transform){
+            Destroy(child.gameObject);
+        }
     }
 
     void GeneratePlatform(){
@@ -23,15 +32,17 @@ public class CubePlatformGenerator : MonoBehaviour{
                 // Calculate the position for each cube
                 float xPos = startX + x * cubeSize + 0.5f;
                 float zPos = startZ + z * cubeSize + 0.5f;
+                float yPos = Mathf.PerlinNoise(xPos, zPos) * 2.0f;
 
-                // Use Perlin noise to determine the height variation
+                // use perlin noise with time-dependent offset and speed to determine the height variation
+                float timeDependentOffset = Time.time * waveSpeed + offset;
                 float scaleMultiplier = 
-                    Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
+                    Mathf.PerlinNoise(x * perlinScale + timeDependentOffset, z * perlinScale + timeDependentOffset) * 2.0f;
 
                 if(cubeSize * scaleMultiplier > minCubeSize){
                     // Instantiate a cube prefab with adjusted scale
                     GameObject cube = 
-                        Instantiate(cubePrefab, new Vector3(xPos, 0, zPos), Quaternion.identity);
+                        Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
 
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
@@ -44,16 +55,4 @@ public class CubePlatformGenerator : MonoBehaviour{
             }
         }
     }
-
-    // void Update(){
-    //     MovePerlinNoise();
-    // }
-
-    // void MovePerlinNoise(){
-    //     float movementSpeed = 0.1f;
-    //     perlinScale += Time.deltaTime * movementSpeed;
-
-    //     float diagonalMovement = Mathf.Sin(Time.time * movementSpeed);
-    //     transform.position = new Vector3(diagonalMovement, 0, diagonalMovement);
-    // }
 }
