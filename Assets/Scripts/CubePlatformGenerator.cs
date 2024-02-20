@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
@@ -7,6 +8,9 @@ public class CubePlatformGenerator : MonoBehaviour{
     public float minCubeSize; // min size for cubes to spawn
     public float waveSpeed;
     public float offset;
+
+    private float fadeInTime = 0.5f;
+    private float fadeOutTime = 0.5f;
 
     void Update(){
         ClearPlatform();
@@ -40,9 +44,6 @@ public class CubePlatformGenerator : MonoBehaviour{
                     Mathf.PerlinNoise(x * perlinScale + timeDependentOffset, z * perlinScale + timeDependentOffset) * 2.0f;
 
                 if(cubeSize * scaleMultiplier > minCubeSize){
-                    // calculate startin scale based on minCubeSize
-                    float startingScale = Mathf.Max(0.5f, minCubeSize / scaleMultiplier);
-
                     // Instantiate a cube prefab with adjusted scale
                     GameObject cube = 
                         Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
@@ -50,11 +51,58 @@ public class CubePlatformGenerator : MonoBehaviour{
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
                     cube.transform.localScale = 
-                        new Vector3(perlinCubeSize * startingScale, perlinCubeSize * startingScale, perlinCubeSize * startingScale);
+                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;
+
+                    // start coroutine for fading in and out
+                    StartCoroutine(FadeInAndOut(cube, fadeInTime, fadeOutTime, scaleMultiplier));
                 }
+            }
+        }
+    }
+
+    IEnumerator FadeInAndOut(GameObject cube, float fadeInTime, float fadeOutTime, float finalScaleMultiplier)
+    {
+        float elapsedTime = 0f;
+        float startScale = 0.1f;
+        Vector3 initialScale = cube.transform.localScale;
+
+        // Fade in
+        while (elapsedTime < fadeInTime && cube != null)
+        {
+            float t = elapsedTime / fadeInTime;
+            cube.transform.localScale = Vector3.Lerp(initialScale, new Vector3(finalScaleMultiplier, finalScaleMultiplier, finalScaleMultiplier), t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Check if cube is null before setting final scale
+        if (cube != null)
+        {
+            cube.transform.localScale = new Vector3(finalScaleMultiplier, finalScaleMultiplier, finalScaleMultiplier);
+
+            // Wait for a while before fading out
+            yield return new WaitForSeconds(1.0f); // Adjust as needed
+
+            // Fade out
+            elapsedTime = 0f;
+            while (elapsedTime < fadeOutTime && cube != null)
+            {
+                float t = elapsedTime / fadeOutTime;
+                cube.transform.localScale = Vector3.Lerp(new Vector3(finalScaleMultiplier, finalScaleMultiplier, finalScaleMultiplier), initialScale, t);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Check if cube is null before setting final scale
+            if (cube != null)
+            {
+                cube.transform.localScale = initialScale;
+
+                // Destroy the cube after fading out
+                Destroy(cube);
             }
         }
     }
