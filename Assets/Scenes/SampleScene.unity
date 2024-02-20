@@ -321,14 +321,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197102225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b8e9673a1e9a8741ae21791defe24f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 50
-  scale: 0.1
-  cubeSize: 1
+  cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
+  resolution: 64
+  perlinScale: 0.15
+  minCubeSize: 1.2
+  waveSpeed: 0.01
+  offset: 2
 --- !u!114 &1197102237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,9 +344,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf7abeaf5c6aa43b0ed559ca0123d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resolution: 50
-  scale: 0.1
-  cubeSizeMultiplier: 1
+  cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
+  resolution: 64
+  perlinScale: 0.15
+  minCubeSize: 1.2
+  waveSpeed: 0.01
+  offset: 2
 --- !u!114 &1197102238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +357,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197102225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf0a9fbaddaa0e9459d97a76e33e2849, type: 3}
   m_Name: 

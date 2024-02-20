@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector

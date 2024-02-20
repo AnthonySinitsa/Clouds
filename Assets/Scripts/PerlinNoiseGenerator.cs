@@ -1,45 +1,48 @@
 using UnityEngine;
 using System.Collections;
-
 public class PerlinNoiseGenerator : MonoBehaviour{
-
-    public int resolution = 10;
-    public float scale = 0.1f;
-    public float cubeSize = 0.1f;
+    public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
+    public int resolution; // Set the resolution here
+    public float perlinScale; // Adjust the scale of the Perlin noise
+    public float minCubeSize; // min size for cubes to spawn
 
     void Start(){
-       GenerateTerrain(); 
+        GeneratePlatform();
     }
 
-    void GenerateTerrain(){
+    void GeneratePlatform(){
+        float cubeSize = 1.0f; // Size of each cube
+        float platformSize = resolution * cubeSize; // Total size of the platform
 
-        float halfResolution = (resolution - 1) * cubeSize / 2f;
+        // Calculate the starting point for the platform
+        float startX = -platformSize / 2;
+        float startZ = -platformSize / 2;
 
-        for(int x = 0; x < resolution; x++){
-            for(int z = 0; z < resolution; z++){
-                float xCoord = transform.position.x + x * scale;
-                float zCoord = transform.position.z + z * scale;
+        for (int x = 0; x < resolution; x++){
+            for (int z = 0; z < resolution; z++){
+                // Calculate the position for each cube
+                float xPos = startX + x * cubeSize + 0.5f;
+                float zPos = startZ + z * cubeSize + 0.5f;
+                float yPos = Mathf.PerlinNoise(xPos, zPos) * 2.0f;
 
-                float y = Mathf.PerlinNoise(xCoord, zCoord) * cubeSize * 10f;
+                // Use Perlin noise to determine the height variation
+                float scaleMultiplier = 
+                    Mathf.PerlinNoise(x * perlinScale, z * perlinScale) * 2.0f;
 
-                Vector3 cubePosition = new Vector3((x - halfResolution) * cubeSize, y, (z - halfResolution) * cubeSize);
+                if(cubeSize * scaleMultiplier > minCubeSize){
+                    // Instantiate a cube prefab with adjusted scale
+                    GameObject cube = 
+                        Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
 
-                InstantiateCube(cubePosition, transform);
+                    // this var for better readibility for the transformation local var
+                    float perlinCubeSize = cubeSize * scaleMultiplier;
+                    cube.transform.localScale = 
+                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
+
+                    // Make the cube a child of the prefab cube
+                    cube.transform.parent = transform;
+                }
             }
-        }
-    }
-
-    void InstantiateCube(Vector3 position, Transform parent){
-        GameObject cubePrefab = Resources.Load<GameObject>("CubePrefab");
-
-        // Check if the prefab is found
-        if (cubePrefab != null){
-            // Instantiate the cube prefab at the calculated position
-            GameObject cube = Instantiate(cubePrefab, position, Quaternion.identity, parent);
-            cube.transform.localScale = new Vector3(cubeSize, cubeSize, cubeSize);
-        }
-        else{
-            Debug.LogError("CubePrefab not found in Resources folder.");
         }
     }
 }
