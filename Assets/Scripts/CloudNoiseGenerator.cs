@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CubePlatformGenerator : MonoBehaviour{
+public class CloudNoiseGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
     public int resolution; // Set the resolution here
     public float perlinScale; // Adjust the scale of the Perlin noise
