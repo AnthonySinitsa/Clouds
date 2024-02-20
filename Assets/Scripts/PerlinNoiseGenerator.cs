@@ -6,8 +6,15 @@ public class PerlinNoiseGenerator : MonoBehaviour{
     public float perlinScale; // Adjust the scale of the Perlin noise
     public float minCubeSize; // min size for cubes to spawn
 
-    void Start(){
+    void Update(){
+        ClearPlatform();
         GeneratePlatform();
+    }
+
+    void ClearPlatform(){
+        foreach(Transform child in transform){
+            Destroy(child.gameObject);
+        }
     }
 
     void GeneratePlatform(){
