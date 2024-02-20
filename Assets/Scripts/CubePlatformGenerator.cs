@@ -40,6 +40,9 @@ public class CubePlatformGenerator : MonoBehaviour{
                     Mathf.PerlinNoise(x * perlinScale + timeDependentOffset, z * perlinScale + timeDependentOffset) * 2.0f;
 
                 if(cubeSize * scaleMultiplier > minCubeSize){
+                    // calculate startin scale based on minCubeSize
+                    float startingScale = Mathf.Max(0.5f, minCubeSize / scaleMultiplier);
+
                     // Instantiate a cube prefab with adjusted scale
                     GameObject cube = 
                         Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
@@ -47,7 +50,7 @@ public class CubePlatformGenerator : MonoBehaviour{
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
                     cube.transform.localScale = 
-                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
+                        new Vector3(perlinCubeSize * startingScale, perlinCubeSize * startingScale, perlinCubeSize * startingScale);
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;
