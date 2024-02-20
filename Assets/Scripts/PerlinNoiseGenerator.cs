@@ -5,8 +5,6 @@ public class PerlinNoiseGenerator : MonoBehaviour{
     public int resolution; // Set the resolution here
     public float perlinScale; // Adjust the scale of the Perlin noise
     public float minCubeSize; // min size for cubes to spawn
-    public float waveSpeed;
-    public float offset;
 
     void Start(){
         GeneratePlatform();
