@@ -330,8 +330,7 @@ MonoBehaviour:
   resolution: 64
   perlinScale: 0.15
   minCubeSize: 1.2
-  waveSpeed: 0.01
-  offset: 2
+  scaleChangeSpeed: 0.5
 --- !u!114 &1197102237
 MonoBehaviour:
   m_ObjectHideFlags: 0
