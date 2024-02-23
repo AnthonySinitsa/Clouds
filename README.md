@@ -6,4 +6,4 @@
 
 1. optimize perlinNoise calls
 
-<script src="https://gist.github.com/AnthonySinitsa/6d3490c3d4663cafab604335d7252dd4.js"></script>
+![download](https://gist.github.com/assets/128409068/606938f6-73cb-44d9-ba09-44d8f5dfbedb)
