@@ -51,9 +51,10 @@ public class CubePlatformGenerator : MonoBehaviour{
                     float perlinCubeSize = cubeSize * scaleMultiplier;
 
                     float dynamicScale = Mathf.Sin(Time.time * scaleChangeSpeed) * minCubeSize + perlinCubeSize;
+                    float dynamicScale2 = Mathf.Lerp(0.5f, perlinCubeSize, Mathf.Sin(Time.time * scaleChangeSpeed) * minCubeSize + perlinCubeSize);
 
                     cube.transform.localScale = 
-                        new Vector3(perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale);
+                        new Vector3(perlinCubeSize * dynamicScale2, perlinCubeSize * dynamicScale2, perlinCubeSize * dynamicScale2);
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;
