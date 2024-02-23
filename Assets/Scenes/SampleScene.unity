@@ -302,8 +302,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.12497992, y: -0.22617126, z: -0.029127132, w: 0.9655974}
-  m_LocalPosition: {x: 10.684454, y: -10.780015, z: -35.744267}
+  m_LocalRotation: {x: -0.39234892, y: -0.0010149031, z: 0.0007814057, w: 0.91981554}
+  m_LocalPosition: {x: -2.706253, y: -15.313161, z: -25.344688}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -365,7 +365,7 @@ MonoBehaviour:
   cubePrefab: {fileID: 7571835958723053455, guid: 92ba4a696835354469d930881a1e5010, type: 3}
   resolution: 64
   perlinScale: 0.15
-  minCubeSize: 1.2
+  minCubeSize: 0.8
   waveSpeed: 0.01
   offset: 2
   scaleChangeSpeed: 0.01
