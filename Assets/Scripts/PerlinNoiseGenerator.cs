@@ -6,6 +6,7 @@ public class PerlinNoiseGenerator : MonoBehaviour{
     public float perlinScale; // Adjust the scale of the Perlin noise
     public float minCubeSize; // min size for cubes to spawn
     public float scaleChangeSpeed = 0.5f; // Speed at which the cubes change size
+    public float maxScaleChange = 0.15f; // Maximum additional scale change
 
     void Update(){
         ClearPlatform();
@@ -45,11 +46,13 @@ public class PerlinNoiseGenerator : MonoBehaviour{
                     // this var for better readability for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
 
-                    // Use a sine function to smoothly change the scale over time
-                    float dynamicScale = Mathf.Sin(Time.time * scaleChangeSpeed) * 0.25f + 1.0f;
-
-                    cube.transform.localScale =
-                        new Vector3(perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale);
+                    // Check if the cube's size is within the specified range
+                    if (perlinCubeSize >= minCubeSize && perlinCubeSize <= (minCubeSize + maxScaleChange)){
+                        // Use a sine function to smoothly change the scale over time
+                        float dynamicScale = Mathf.Sin(Time.time * scaleChangeSpeed) * 0.25f + 1.0f;
+                        cube.transform.localScale =
+                            new Vector3(perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale);
+                    }
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;

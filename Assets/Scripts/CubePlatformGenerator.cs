@@ -3,11 +3,12 @@ using System.Collections;
 
 public class CubePlatformGenerator : MonoBehaviour{
     public GameObject cubePrefab; // Drag your cube prefab here in the Inspector
-    public int resolution; // Set the resolution here
-    public float perlinScale; // Adjust the scale of the Perlin noise
-    public float minCubeSize; // min size for cubes to spawn
-    public float waveSpeed;
-    public float offset;
+    public int resolution = 64; // Set the resolution here
+    public float perlinScale = 0.15f; // Adjust the scale of the Perlin noise
+    public float minCubeSize = 0.8f; // min size for cubes to spawn
+    public float waveSpeed = 0.01f;
+    public float offset = 2.0f;
+    public float scaleChangeSpeed = 0.15f;
 
     void Update(){
         ClearPlatform();
@@ -45,10 +46,15 @@ public class CubePlatformGenerator : MonoBehaviour{
                     GameObject cube = 
                         Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
 
+
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
+
+                    // float dynamicScale = Mathf.Sin(Time.time * scaleChangeSpeed) * minCubeSize + perlinCubeSize;
+                    float dynamicScale = Mathf.Lerp(0.5f, perlinCubeSize, Mathf.Sin(Time.time * scaleChangeSpeed) * minCubeSize + perlinCubeSize);
+
                     cube.transform.localScale = 
-                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
+                        new Vector3(perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale);
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;
