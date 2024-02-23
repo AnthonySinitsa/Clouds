@@ -8,6 +8,7 @@ public class CubePlatformGenerator : MonoBehaviour{
     public float minCubeSize; // min size for cubes to spawn
     public float waveSpeed;
     public float offset;
+    public float scaleChangeSpeed = 0.15f;
 
     void Update(){
         ClearPlatform();
@@ -45,10 +46,14 @@ public class CubePlatformGenerator : MonoBehaviour{
                     GameObject cube = 
                         Instantiate(cubePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
 
+
                     // this var for better readibility for the transformation local var
                     float perlinCubeSize = cubeSize * scaleMultiplier;
+
+                    float dynamicScale = Mathf.Sin(Time.time * scaleChangeSpeed) * minCubeSize + perlinCubeSize;
+
                     cube.transform.localScale = 
-                        new Vector3(perlinCubeSize, perlinCubeSize, perlinCubeSize);
+                        new Vector3(perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale, perlinCubeSize * dynamicScale);
 
                     // Make the cube a child of the prefab cube
                     cube.transform.parent = transform;

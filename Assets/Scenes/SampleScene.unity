@@ -368,6 +368,7 @@ MonoBehaviour:
   minCubeSize: 1.2
   waveSpeed: 0.01
   offset: 2
+  scaleChangeSpeed: 0.01
 --- !u!1001 &4219575181254361796
 PrefabInstance:
   m_ObjectHideFlags: 0
