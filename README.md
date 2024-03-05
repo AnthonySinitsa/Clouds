@@ -14,9 +14,11 @@
 
 ## _______________________________________________________________________________
 
-![homer](clouds.jpg)
-![homer](clouds22.jpg)
-![homer](clouds3.jpg)
+Animation speed increased for more satisfaction
+
+![homer](cloudgif1.gif)
+![homer](cloudgif2.gif)
+![homer](cloudgif3.gif)
 
 ## How it's done
 
